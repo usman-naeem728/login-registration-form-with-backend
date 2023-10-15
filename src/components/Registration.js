@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import Loader from './Loader'
+
 
 const Registration = () => {
-    const navigate = useNavigate()
+  
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailerror] = useState(false)
     const [passError, setPasserror] = useState(false)
-    const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
-    const navigation = () =>{
-        navigate('/')
-    }
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 3000);
+    })
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -45,6 +49,7 @@ const Registration = () => {
     }
     return (
         <>
+        {isLoading ? <Loader /> :
             <div className="wrapper">
                 <header>Registration Form</header>
                 <form onSubmit={handleClick}>
@@ -73,8 +78,9 @@ const Registration = () => {
                     <div className="pass-txt"><a href="#">Forgot password?</a></div>
                     <input type="submit" value="Login" />
                 </form>
-                <div className="sign-txt">Already a member? <a href="/" onClick={navigation}>Login now</a></div>
+                <div className="sign-txt">Already a member? <Link to={'/'} >Login now</Link></div>
             </div>
+}
         </>
     )
 }
