@@ -3,7 +3,7 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import { useEffect } from "react";
 import Loader from "./components/Loader";
-
+import UserState from "./context/UserState";
 
 function App() {
   useEffect(() => {
@@ -13,12 +13,14 @@ function App() {
   })
   return (
     <>
+    <UserState>
       <Router>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/registration' element={<Registration />} />
         </Routes>
       </Router>
+    </UserState>
 
     </>
   );

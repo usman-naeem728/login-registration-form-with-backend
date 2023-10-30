@@ -24,7 +24,7 @@ const Login = () => {
         setTimeout(() => { //remove shake class after 500ms
             setEmailerror(false)
             setPasserror(false)
-        }, 500);
+        }, 2000);
     }
     function checkEmail() { //checkEmail function
         let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; //pattern for validate email
