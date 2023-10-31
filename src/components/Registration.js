@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useContext, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Loader from './Loader'
 import userContext from '../context/userContext'
 
 
 const Registration = () => {
     const context = useContext(userContext)
-    const { signup, token, error } = context
-  
+    const { signup,token, error } = context
+    const navigate = useNavigate()
+
     const [passwordconfirm, setPasswordconfirm] = useState('')
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "", contactno: "", address: "" })
 
@@ -29,7 +30,13 @@ const Registration = () => {
         setTimeout(() => {
             setIsLoading(false)
         }, 3000);
-    })
+
+        if (token !== "" ) {
+            window.location.reload()
+            navigate("/")
+          }
+    },[token,error])
+
     function passwordCheck(){
         (credentials.password.length < 5)? setPasserror(true) : setPasserror(false);
         (passError === false) && checkConfirmPass();
@@ -49,7 +56,7 @@ const Registration = () => {
 
     function signuphandler(){
         signup(credentials.name, credentials.email,credentials.password, credentials.contactno, credentials.address)
-        console.log("all clear")
+        
     }
     const handleClick = (e) => {
         e.preventDefault();
@@ -149,6 +156,9 @@ const Registration = () => {
                         <div className="pass-txt"><a href="#">Forgot password?</a></div>
                         <input type="submit" value="Sign up" />
                     </form>
+                    {error &&
+                        <div style={{ "animation" : "shake 0.3s ease-in-out", "color" : "red"}} className="error error-txt ">email address already exists</div>
+                   }
                     <div className="sign-txt">Already a member? <Link to={'/'} >Login now</Link></div>
                 </div>
             }
